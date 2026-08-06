@@ -37,9 +37,10 @@ app.use('/api/dashboard', require('./routes/dashboardRoutes'));
 
 // Production & Static Serving configuration
 const frontendDistPath = path.join(__dirname, '../frontend/dist');
-const isProduction = process.env.NODE_ENV === 'production' || fs.existsSync(frontendDistPath);
+const indexPath = path.join(frontendDistPath, 'index.html');
+const hasDistFolder = fs.existsSync(frontendDistPath) && fs.existsSync(indexPath);
 
-if (isProduction) {
+if (hasDistFolder) {
   // Serve static files from the React/Vite build folder
   app.use(express.static(frontendDistPath));
 
@@ -48,14 +49,14 @@ if (isProduction) {
     if (req.originalUrl.startsWith('/api')) {
       return next();
     }
-    res.sendFile(path.join(frontendDistPath, 'index.html'));
+    res.sendFile(indexPath);
   });
 } else {
-  // Root status endpoint for development mode
+  // Fallback endpoint if static build directory is missing
   app.get('/', (req, res) => {
     res.status(200).json({
       success: true,
-      message: 'PillSync API Server is active and operational (Development Mode).'
+      message: 'PillSync API Server is active and operational.'
     });
   });
 }
