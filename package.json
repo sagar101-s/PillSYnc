@@ -1,9 +1,13 @@
 {
-  "name": "medication-tracking-and-history-module",
+  "name": "pillsync-healthcare-management-system",
   "version": "1.0.0",
-  "description": "Production-ready Medication Tracking & History Module using React, Node.js, Express, MongoDB, and Tailwind CSS.",
+  "description": "Production-ready MERN Healthcare & Medication Tracking System.",
+  "main": "backend/server.js",
   "scripts": {
     "setup": "npm install && cd backend && npm install && cd ../frontend && npm install",
+    "postinstall": "cd backend && npm install && cd ../frontend && npm install",
+    "build": "cd frontend && npm run build",
+    "start": "cd backend && node server.js",
     "dev:backend": "cd backend && npm run dev",
     "dev:frontend": "cd frontend && npm run dev",
     "dev": "concurrently \"npm run dev:backend\" \"npm run dev:frontend\"",

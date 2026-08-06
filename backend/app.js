@@ -1,40 +1,69 @@
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
+const fs = require('fs');
 const { errorHandler } = require('./middleware/errorMiddleware');
 
 const app = express();
 
-// Configure CORS
-const corsOptions = {
-  origin: process.env.CLIENT_URL || 'http://localhost:5173',
+// Configure CORS for both development and production
+const allowedOrigins = [
+  process.env.CLIENT_URL,
+  'http://localhost:5173',
+  'http://localhost:5000'
+].filter(Boolean);
+
+app.use(cors({
+  origin: (origin, callback) => {
+    if (!origin || allowedOrigins.includes(origin) || process.env.NODE_ENV === 'production') {
+      return callback(null, true);
+    }
+    return callback(null, true);
+  },
+  credentials: true,
   optionsSuccessStatus: 200
-};
-app.use(cors(corsOptions));
+}));
 
 // Body Parser Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-// Mount Routing modules
+// Mount API Routing modules
 app.use('/api/patients', require('./routes/patientRoutes'));
 app.use('/api/medications', require('./routes/medicationRoutes'));
 app.use('/api/history', require('./routes/historyRoutes'));
 app.use('/api/adherence', require('./routes/adherenceRoutes'));
 app.use('/api/dashboard', require('./routes/dashboardRoutes'));
 
-// Root endpoint for status check
-app.get('/', (req, res) => {
-  res.status(200).json({
-    success: true,
-    message: 'Medication Tracking API Server is active and operational.'
-  });
-});
+// Production & Static Serving configuration
+const frontendDistPath = path.join(__dirname, '../frontend/dist');
+const isProduction = process.env.NODE_ENV === 'production' || fs.existsSync(frontendDistPath);
 
-// Fallback 404 Route for unmatched paths
-app.use((req, res, next) => {
+if (isProduction) {
+  // Serve static files from the React/Vite build folder
+  app.use(express.static(frontendDistPath));
+
+  // Catch-all route to return index.html for React Router client-side navigation
+  app.get('*', (req, res, next) => {
+    if (req.originalUrl.startsWith('/api')) {
+      return next();
+    }
+    res.sendFile(path.join(frontendDistPath, 'index.html'));
+  });
+} else {
+  // Root status endpoint for development mode
+  app.get('/', (req, res) => {
+    res.status(200).json({
+      success: true,
+      message: 'PillSync API Server is active and operational (Development Mode).'
+    });
+  });
+}
+
+// Fallback 404 Route for unmatched API requests
+app.use('/api/*', (req, res, next) => {
   res.status(404);
-  const error = new Error(`Not Found - URL requested does not exist: ${req.originalUrl}`);
+  const error = new Error(`Not Found - API endpoint requested does not exist: ${req.originalUrl}`);
   next(error);
 });
 

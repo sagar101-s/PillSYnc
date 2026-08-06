@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-// Detect or fallback base URL
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+// Detect or fallback base URL for unified single-origin deployment
+const API_URL = import.meta.env.VITE_API_URL || '/api';
 
 const apiClient = axios.create({
   baseURL: API_URL,

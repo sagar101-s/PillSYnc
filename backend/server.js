@@ -1,5 +1,4 @@
-require('dotenv').config({ path: require('path').resolve(__dirname, '../.env') });
-// Trigger nodemon reload for multi-patient schemas
+// Server entry point for PillSync Unified MERN Application
 const app = require('./app');
 const connectDB = require('./config/db');
 
