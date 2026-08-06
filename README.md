@@ -50,7 +50,10 @@ PillSync/
 
 ---
 
-## 🌐 Deploying on Render (Single Web Service)
+## 🌐 Production Deployment
+
+* **Live Application URL**: [https://pillsync-3.onrender.com](https://pillsync-3.onrender.com)
+* **REST API Root**: [https://pillsync-3.onrender.com/api](https://pillsync-3.onrender.com/api)
 
 PillSync is pre-configured for 1-click single Web Service deployment on **Render**, **Railway**, or **Heroku**.
 
@@ -60,18 +63,19 @@ PillSync is pre-configured for 1-click single Web Service deployment on **Render
 2. Log in to [Render.com](https://render.com) and click **New +** → **Web Service**.
 3. Select your repository `PillSYnc`.
 4. Configure service settings:
-   * **Name**: `pillsync`
+   * **Name**: `pillsync-3`
    * **Environment**: `Node`
    * **Build Command**: `npm run build`
    * **Start Command**: `npm start`
 5. Add Environment Variables:
    * `NODE_ENV`: `production`
    * `PORT`: `5000`
+   * `CLIENT_URL`: `https://pillsync-3.onrender.com`
    * `MONGO_URI`: `<your_mongodb_atlas_connection_string>`
    * `JWT_SECRET`: `<your_jwt_secret_key>`
 6. Click **Create Web Service**.
 
-Render will automatically run `npm run build` to compile the Vite frontend into `frontend/dist`, start the Express backend server on Node, and serve both the React interface and REST API endpoints from a single URL!
+Render will automatically run `npm run build` to compile the Vite frontend into `frontend/dist`, start the Express backend server on Node, and serve both the React interface and REST API endpoints from `https://pillsync-3.onrender.com`!
 
 ---
 
@@ -86,8 +90,6 @@ npm run setup
 ```bash
 npm run dev
 ```
-* **Frontend**: http://localhost:5173 (Proxies `/api` requests to localhost:5000)
-* **Backend**: http://localhost:5000
 
 ### 3. Re-seed Database
 ```bash

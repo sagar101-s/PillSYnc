@@ -9,6 +9,7 @@ const app = express();
 // Configure CORS for both development and production
 const allowedOrigins = [
   process.env.CLIENT_URL,
+  'https://pillsync-3.onrender.com',
   'http://localhost:5173',
   'http://localhost:5000'
 ].filter(Boolean);

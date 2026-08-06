@@ -41,8 +41,9 @@ const SettingsPage = () => {
   const handleReSeed = async () => {
     setSeeding(true);
     try {
+      const apiBase = import.meta.env.VITE_API_URL || '/api';
       // Send API post to trigger backend seed function
-      const response = await fetch('http://localhost:5000/api/dashboard/reset-seed', {
+      const response = await fetch(`${apiBase}/dashboard/reset-seed`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -74,7 +75,8 @@ const SettingsPage = () => {
 
     setClearing(true);
     try {
-      const response = await fetch('http://localhost:5000/api/dashboard/clear-all', {
+      const apiBase = import.meta.env.VITE_API_URL || '/api';
+      const response = await fetch(`${apiBase}/dashboard/clear-all`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
