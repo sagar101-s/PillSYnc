@@ -1,0 +1,15 @@
+{
+  "name": "medication-tracking-and-history-module",
+  "version": "1.0.0",
+  "description": "Production-ready Medication Tracking & History Module using React, Node.js, Express, MongoDB, and Tailwind CSS.",
+  "scripts": {
+    "setup": "npm install && cd backend && npm install && cd ../frontend && npm install",
+    "dev:backend": "cd backend && npm run dev",
+    "dev:frontend": "cd frontend && npm run dev",
+    "dev": "concurrently \"npm run dev:backend\" \"npm run dev:frontend\"",
+    "seed": "cd backend && npm run seed"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}
