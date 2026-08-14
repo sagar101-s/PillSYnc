@@ -11,6 +11,7 @@ import {
   ShieldCheck,
   Activity
 } from 'lucide-react';
+import { SpeedInsights } from '@vercel/speed-insights/react';
 import { useTheme } from './context/ThemeContext';
 
 // Pages
@@ -94,12 +95,14 @@ const App = () => {
   );
 
   return (
-    <div className="flex h-screen bg-slate-50 dark:bg-darkbg-950 transition-colors duration-300 overflow-hidden">
-      
-      {/* Desktop Sidebar */}
-      <aside className="hidden lg:block w-64 h-full flex-shrink-0">
-        {sidebarContent}
-      </aside>
+    <>
+      <SpeedInsights />
+      <div className="flex h-screen bg-slate-50 dark:bg-darkbg-950 transition-colors duration-300 overflow-hidden">
+        
+        {/* Desktop Sidebar */}
+        <aside className="hidden lg:block w-64 h-full flex-shrink-0">
+          {sidebarContent}
+        </aside>
 
       {/* Mobile Drawer Backdrop */}
       {mobileMenuOpen && (
@@ -177,6 +180,7 @@ const App = () => {
         </main>
       </div>
     </div>
+    </>
   );
 };
 
