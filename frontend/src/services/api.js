@@ -176,5 +176,14 @@ export const api = {
     } catch (e) {
       handleApiError(e);
     }
+  },
+
+  getClinicalDashboard: async () => {
+    try {
+      const response = await apiClient.get('/dashboard', { params: { global: true } });
+      return response.data;
+    } catch (e) {
+      handleApiError(e);
+    }
   }
 };

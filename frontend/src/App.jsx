@@ -8,11 +8,13 @@ import {
   Menu, 
   X,
   Pill,
-  ShieldCheck
+  ShieldCheck,
+  Activity
 } from 'lucide-react';
 import { useTheme } from './context/ThemeContext';
 
 // Pages
+import Dashboard from './pages/Dashboard';
 import PatientsDashboard from './pages/PatientsDashboard';
 import PatientProfile from './pages/PatientProfile';
 import MedicationForm from './pages/MedicationForm';
@@ -26,7 +28,8 @@ const App = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const menuItems = [
-    { name: 'Patients Directory', path: '/', icon: Users },
+    { name: 'Clinical Dashboard', path: '/', icon: Activity },
+    { name: 'Patients Directory', path: '/patients', icon: Users },
     { name: 'System Settings', path: '/settings', icon: Settings },
   ];
 
@@ -162,7 +165,8 @@ const App = () => {
         {/* Scrollable Main content view container */}
         <main className="flex-grow overflow-y-auto custom-scrollbar p-6 bg-slate-50/50 dark:bg-darkbg-950/50">
           <Routes>
-            <Route path="/" element={<PatientsDashboard />} />
+            <Route path="/" element={<Dashboard />} />
+            <Route path="/patients" element={<PatientsDashboard />} />
             <Route path="/patients/:patientId" element={<PatientProfile />} />
             <Route path="/medications/new" element={<MedicationForm />} />
             <Route path="/medications/:id/edit" element={<MedicationForm />} />
